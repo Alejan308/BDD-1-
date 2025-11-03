@@ -3,7 +3,7 @@ GO
 USE FreeSpaces;
 GO
 
---# CREACIÓN DE TABLAS
+--# CREACIÃ“N DE TABLAS
 
 
 CREATE TABLE Usuario (
@@ -31,7 +31,7 @@ CREATE TABLE Ubicacion (
 CREATE TABLE TipoEspacio (
     IDtipoEspacio INT IDENTITY(1,1) PRIMARY KEY,
     Nombre VARCHAR(100) NOT NULL,
-    Elementos TEXT,
+    Elementos VARCHAR(400),
     CantLugar INT
 );
 
