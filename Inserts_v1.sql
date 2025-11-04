@@ -1,74 +1,16 @@
-CREATE DATABASE FreeSpaces;
-GO
-USE FreeSpaces;
-GO
-
---# CREACI�N DE TABLAS
-
-drop database FreeSpaces
-CREATE TABLE Usuario (
-    LU INT IDENTITY(1,1) PRIMARY KEY,
-    Nombre VARCHAR(50) NOT NULL,
-    Apellido VARCHAR(50) NOT NULL,
-    Mail VARCHAR(100) UNIQUE NOT NULL,
-    Privilegio VARCHAR(20) NOT NULL,
-
-);
-
-CREATE TABLE Sede (
-    IDsede INT IDENTITY(1,1) PRIMARY KEY,
-    Nombre VARCHAR(100) NOT NULL,
-    Direccion VARCHAR(200),
-    Edificios INT
-);
-
-CREATE TABLE Ubicacion (
-    IDubicacion INT IDENTITY(1,1) PRIMARY KEY,
-    Edificio VARCHAR(100),
-    Piso VARCHAR(10)
-);
-
-CREATE TABLE TipoEspacio (
-    IDtipoEspacio INT IDENTITY(1,1) PRIMARY KEY,
-    Nombre VARCHAR(100) NOT NULL,
-    Elementos VARCHAR(400)
-);
-
-CREATE TABLE Espacios (
-    IDespacio INT IDENTITY(1,1) PRIMARY KEY,
-    IDsede INT,
-    Estado VARCHAR(20) DEFAULT 'Disponible' CHECK (Estado IN ('Ocupado', 'Disponible')),
-    IDtipoEspacio INT,
-    IDubicacion INT,
-    CantLugar INT,
-    CONSTRAINT Espacios_Sede FOREIGN KEY (IDsede) REFERENCES Sede(IDsede),
-    CONSTRAINT Espacios_TipoEspacio FOREIGN KEY (IDtipoEspacio) REFERENCES TipoEspacio(IDtipoEspacio),
-    CONSTRAINT Espacios_Ubicacion FOREIGN KEY (IDubicacion) REFERENCES Ubicacion(IDubicacion)
-);
-
-CREATE TABLE Registro (
-    IDregistro INT IDENTITY(1,1) PRIMARY KEY, 
-    IDespacio INT,
-    IDusuario INT,
-    HoraEntrada DATETIME,
-    HoraSalida DATETIME,
-    CONSTRAINT Registro_Espacio FOREIGN KEY (IDespacio) REFERENCES Espacios(IDespacio),
-    CONSTRAINT Registro_Usuario FOREIGN KEY (IDusuario) REFERENCES Usuario(LU)
-);
-
-
-
 --# INSERTES
+
+select * from Usuario;
 
 -- USUARIOS
 INSERT INTO Usuario (Nombre, Apellido, Mail, Privilegio) VALUES
-('Ana', 'G�mez', 'ana.gomez@uade.edu.ar', 'Admin'),
-('Luis', 'P�rez', 'luis.perez@uade.edu.ar', 'Usuario'),
-('Mar�a', 'L�pez', 'maria.lopez@uade.edu.ar', 'Usuario'),
+('Ana', 'Gomez', 'ana.gomez@uade.edu.ar', 'Admin'),
+('Luis', 'Perez', 'luis.perez@uade.edu.ar', 'Usuario'),
+('Maria', 'Lopez', 'maria.lopez@uade.edu.ar', 'Usuario'),
 ('Juan', 'Torres', 'juan.torres@uade.edu.ar', 'Admin'),
-('Sof�a', 'Mendez', 'sofia.mendez@uade.edu.ar', 'Usuario'),
+('Sofia', 'Mendez', 'sofia.mendez@uade.edu.ar', 'Usuario'),
 ('Carlos', 'Rivas', 'carlos.rivas@uade.edu.ar', 'Usuario'),
-('Luc�a', 'Navarro', 'lucia.navarro@uade.edu.ar', 'Usuario'),
+('Lucia', 'Navarro', 'lucia.navarro@uade.edu.ar', 'Usuario'),
 ('Miguel', 'Ruiz', 'miguel.ruiz@uade.edu.ar', 'Usuario'),
 ('Elena', 'Fernandez', 'elena.fernandez@uade.edu.ar', 'Admin'),
 ('Jorge', 'Santos', 'jorge.santos@uade.edu.ar', 'Usuario');
@@ -102,15 +44,19 @@ INSERT INTO Ubicacion (Edificio, Piso) VALUES
 -- TIPOESPACIO
 INSERT INTO TipoEspacio (Nombre, Elementos, CantLugar) VALUES
 ('Laboratorio Inform�tica', 'PCs, proyectores, pizarras', 25),
-('Aula', 'Sillas, mesas, pizarr�n', 40),
+('Aula grande', 'Sillas, mesas, pizarr�n', 60),
 ('Sala de Reuniones', 'Mesa grande, pantalla, sillas', 10),
 ('Auditorio', 'Escenario, butacas, sonido', 200),
 ('Biblioteca', 'Mesas, estantes, PCs', 50),
-('Oficina', 'Escritorios, sillas, armarios', 5),
-('Taller', 'Herramientas, bancos de trabajo', 15),
+('Aula chica', 'Escritorios, sillas, armarios', 5),
+('Aula mediana', 'Herramientas, bancos de trabajo', 15),
 ('Comedor', 'Mesas, sillas, microondas', 30),
-('Dep�sito', 'Estantes, cajas, armarios', 8),
-('Sala de Estudio', 'Mesas, sillas, enchufes', 20);
+('Aula ruidosa', 'Estantes, cajas, armarios', 20),
+('Aula silenciosa', 'Mesas, sillas, enchufes', 20),
+('Mesa patio', 'Mesas, sillas, enchufes', 20),
+('Mesa pasillo', 'Mesas, sillas, enchufes', 20),
+('Mesa de Estudio', 'Mesas, sillas, enchufes', 20),
+('Xperience', 'Mesas, sillas, enchufes', 80);
 
 -- ESPACIOS
 INSERT INTO Espacios (IDsede, Estado, IDtipoEspacio, IDubicacion) VALUES
