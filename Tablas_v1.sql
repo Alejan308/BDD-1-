@@ -1,9 +1,9 @@
-CREATE DATABASE FreeSpaces;
+CREATE DATABASE FreeSpaces 
 GO
 USE FreeSpaces;
 GO
 
---# CREACI�N DE TABLAS
+--# CREACION DE TABLAS
 
 drop database FreeSpaces
 CREATE TABLE Usuario (
@@ -31,7 +31,8 @@ CREATE TABLE Ubicacion (
 CREATE TABLE TipoEspacio (
     IDtipoEspacio INT IDENTITY(1,1) PRIMARY KEY,
     Nombre VARCHAR(100) NOT NULL,
-    Elementos VARCHAR(400)
+    Elementos VARCHAR(400),
+    CantLugar INT,
 );
 
 CREATE TABLE Espacios (
@@ -40,7 +41,6 @@ CREATE TABLE Espacios (
     Estado VARCHAR(20) DEFAULT 'Disponible' CHECK (Estado IN ('Ocupado', 'Disponible')),
     IDtipoEspacio INT,
     IDubicacion INT,
-    CantLugar INT,
     CONSTRAINT Espacios_Sede FOREIGN KEY (IDsede) REFERENCES Sede(IDsede),
     CONSTRAINT Espacios_TipoEspacio FOREIGN KEY (IDtipoEspacio) REFERENCES TipoEspacio(IDtipoEspacio),
     CONSTRAINT Espacios_Ubicacion FOREIGN KEY (IDubicacion) REFERENCES Ubicacion(IDubicacion)
@@ -62,9 +62,9 @@ CREATE TABLE Registro (
 
 -- USUARIOS
 INSERT INTO Usuario (Nombre, Apellido, Mail, Privilegio) VALUES
-('Ana', 'G�mez', 'ana.gomez@uade.edu.ar', 'Admin'),
-('Luis', 'P�rez', 'luis.perez@uade.edu.ar', 'Usuario'),
-('Mar�a', 'L�pez', 'maria.lopez@uade.edu.ar', 'Usuario'),
+('Ana', 'Gomez', 'ana.gomez@uade.edu.ar', 'Admin'),
+('Luis', 'Perez', 'luis.perez@uade.edu.ar', 'Usuario'),
+('Mar�a', 'Lopez', 'maria.lopez@uade.edu.ar', 'Usuario'),
 ('Juan', 'Torres', 'juan.torres@uade.edu.ar', 'Admin'),
 ('Sof�a', 'Mendez', 'sofia.mendez@uade.edu.ar', 'Usuario'),
 ('Carlos', 'Rivas', 'carlos.rivas@uade.edu.ar', 'Usuario'),

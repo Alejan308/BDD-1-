@@ -15,7 +15,7 @@ INSERT INTO Usuario (Nombre, Apellido, Mail, Privilegio) VALUES
 ('Elena', 'Fernandez', 'elena.fernandez@uade.edu.ar', 'Admin'),
 ('Jorge', 'Santos', 'jorge.santos@uade.edu.ar', 'Usuario');
 
--- SEDES (solo 4 tipos, repetidas para 10 registros)
+-- SEDES 
 INSERT INTO Sede (Nombre, Direccion, Edificios) VALUES
 ('Monserrat', 'Lima 775', 3),
 ('Belgrano', 'Av. Cabildo 1456', 2),
@@ -28,7 +28,7 @@ INSERT INTO Sede (Nombre, Direccion, Edificios) VALUES
 ('Pinamar', 'De las Artes 900', 1),
 ('Recoleta', 'Av. Pueyrred�n 120', 2);
 
--- UBICACIONES (usando tus edificios)
+-- UBICACIONES 
 INSERT INTO Ubicacion (Edificio, Piso) VALUES
 ('Lima 1', '2'),
 ('Lima 2', '3'),
