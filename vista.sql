@@ -51,5 +51,3 @@ GO
     SELECT * FROM V_Popularidad_Espacios;
 GO
 
-
-GO
