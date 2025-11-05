@@ -103,6 +103,37 @@ GO
 /*Procedimiento almacenado Espacio*/
 
 /*Procedimiento almacenado TipoEspacio*/
+GO
+--Procedimiento 1: sp_Listar_TipoEspacio
+--Objetivo: Listar todos los tipos de espacio con sus elementos y cantidad de lugares.
+
+CREATE PROCEDURE sp_Listar_TipoEspacio --→ Crea un procedimiento almacenado con el nombre sp_Listar_TipoEspacio
+AS
+BEGIN
+    SELECT --→ Consulta (SELECT) que pide esos 4 campos de la tabla TipoEspacio. Devuelve todas las filas de la tabla.
+        IDtipoEspacio,
+        Nombre,
+        Elementos,
+        CantLugar
+    FROM TipoEspacio
+    ORDER BY Nombre;
+END;
+GO
+
+--Procedimiento 2: sp_Insertar_TipoEspacio
+--Objetivo: Insertar un nuevo tipo de espacio con sus características.
+CREATE PROCEDURE sp_Insertar_TipoEspacio --→ Crea el procedimiento sp_Insertar_TipoEspacio
+    @Nombre VARCHAR(100), --→ Estos son los parámetros que recibe el procedimiento.
+    @Elementos VARCHAR(400),
+    @CantLugar INT
+AS
+BEGIN
+    INSERT INTO TipoEspacio (Nombre, Elementos) --→ Inserta un nuevo registro en la tabla TipoEspacio
+    VALUES (@Nombre, @Elementos);
+
+    PRINT 'Se agrego un nuevo tipo de espacio correctamente.';
+END;
+GO
 
 /*Procedimiento almacenado Ubicacion*/
 
