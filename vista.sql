@@ -50,3 +50,18 @@ GO
 GO
     SELECT * FROM V_Popularidad_Espacios;
 GO
+
+
+GO
+
+-- crea una visita para ver los espacios junto con su tipo 
+CREATE VIEW Vista_Espacios_Tipo
+AS
+SELECT
+     E.IDespacio,
+     E.Nombre AS NombreEspacio,
+     T.Nombre AS TipoEspacio,
+     E.Capacidad 
+FROM Espacios e
+INNER JOIN TipoEspacio T ON E.IDtipoEspacio = T.IDtipoEspacio;
+GO
