@@ -22,3 +22,37 @@ BEGIN
     FROM inserted;
 end;
 GO
+
+--Creación de tabla para guardar los registros de movimiento de Usuario
+ CREATE TABLE tb_Registro_Usuario(
+    ID_Registro_Usuario INT IDENTITY(1,1) PRIMARY KEY,
+    LU int,
+    Nombre VARCHAR(50),
+    Apellido VARCHAR(50),
+    Mail VARCHAR(100),
+    Estado_Usuario VARCHAR(10),
+);
+GO
+
+--Trigger tr_Resgistro_Usuario
+--Objetivo: registrar cualquier alta y baja de Usuarios en una tabla específica 
+CREATE TRIGGER tr_Registro_Usuario
+ON Usuario
+AFTER INSERT, DELETE
+AS
+BEGIN
+
+    IF EXISTS (SELECT 1 FROM inserted)
+    BEGIN
+        INSERT INTO dbo.tb_Registro_Usuario (LU, Nombre, Apellido, Mail, Estado_Usuario)
+            SELECT LU, Nombre, Apellido, Mail, 'Inserted' FROM inserted;
+    END;
+
+    IF EXISTS (SELECT 1 FROM deleated)
+    BEGIN
+        INSERT INTO dbo.tb_Registro_Usuario (LU, Nombre, Apellido, Mail, Estado_Usuario)
+            SELECT LU, Nombre, Apellido, Mail, 'Deleted' FROM deleted;
+    END;
+
+END;
+GO
