@@ -1,4 +1,32 @@
 /*Procedimiento almacenado Usuario*/
+--Procedimiento 1: sp_Ingresar_Usuario
+--Objetivo: Ingresar nuevos Usuarios
+CREATE PROCEDURE sp_Ingresar_Usuario
+    @Nombre VARCHAR(50),
+    @Apellido VARCHAR(50),
+    @Mail VARCHAR(100),
+    @Privilegio VARCHAR(20)
+AS
+BEGIN
+    INSERT INTO Usuario VALUES (@Nombre, @Apellido, @Mail, @Privilegio)
+    PRINT 'Ingreso del nuevo usuario realizado con éxito.'
+END
+GO
+
+EXEC sp_Ingresar_Usuario 'Ignacio Fernando', 'Gonzalez Gomez', 'igngonzalez@uade.edu.ar', 'Estudiante';
+GO
+
+--Procedimiento 2: sp_Baja_Usuario
+--Objetivo: Capacidad de dar de baja a un Usuario con el Legajo o el mail.
+CREATE PROCEDURE sp_Baja_Usuario
+    @LU INT,
+    @Mail VARCHAR(100)
+AS
+BEGIN
+    DELETE FROM Usuario WHERE LU = @LU OR mail = @Mail
+    PRINT 'El usuario ha sido Eliminado correctamente'
+END
+GO
 
 --------------------------------------------------------------------------------------------------------------------------------
 /*Procedimiento almacenado Registo*/
