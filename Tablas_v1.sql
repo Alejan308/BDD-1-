@@ -62,16 +62,16 @@ CREATE TABLE Registro (
 
 -- USUARIOS
 INSERT INTO Usuario (Nombre, Apellido, Mail, Privilegio) VALUES
-('Ana', 'Gomez', 'ana.gomez@uade.edu.ar', 'Admin'),
-('Luis', 'Perez', 'luis.perez@uade.edu.ar', 'Usuario'),
-('Mar�a', 'Lopez', 'maria.lopez@uade.edu.ar', 'Usuario'),
-('Juan', 'Torres', 'juan.torres@uade.edu.ar', 'Admin'),
-('Sof�a', 'Mendez', 'sofia.mendez@uade.edu.ar', 'Usuario'),
-('Carlos', 'Rivas', 'carlos.rivas@uade.edu.ar', 'Usuario'),
-('Luc�a', 'Navarro', 'lucia.navarro@uade.edu.ar', 'Usuario'),
-('Miguel', 'Ruiz', 'miguel.ruiz@uade.edu.ar', 'Usuario'),
-('Elena', 'Fernandez', 'elena.fernandez@uade.edu.ar', 'Admin'),
-('Jorge', 'Santos', 'jorge.santos@uade.edu.ar', 'Usuario');
+('Ana', 'Gomez', 'ana.gomez@uade.edu.ar', 'Docente'),
+('Luis', 'Perez', 'luis.perez@uade.edu.ar', 'Admin'),
+('Mar�a', 'Lopez', 'maria.lopez@uade.edu.ar', 'Estudiante'),
+('Juan', 'Torres', 'juan.torres@uade.edu.ar', 'Docente'),
+('Sof�a', 'Mendez', 'sofia.mendez@uade.edu.ar', 'Estudiante'),
+('Carlos', 'Rivas', 'carlos.rivas@uade.edu.ar', 'Estudiante'),
+('Luc�a', 'Navarro', 'lucia.navarro@uade.edu.ar', 'Estudiante'),
+('Miguel', 'Ruiz', 'miguel.ruiz@uade.edu.ar', 'Estudiante'),
+('Elena', 'Fernandez', 'elena.fernandez@uade.edu.ar', 'Docente'),
+('Jorge', 'Santos', 'jorge.santos@uade.edu.ar', 'Estudiante');
 
 -- SEDES (solo 4 tipos, repetidas para 10 registros)
 INSERT INTO Sede (Nombre, Direccion, Edificios) VALUES
@@ -102,15 +102,16 @@ INSERT INTO Ubicacion (Edificio, Piso) VALUES
 -- TIPOESPACIO
 INSERT INTO TipoEspacio (Nombre, Elementos, CantLugar) VALUES
 ('Laboratorio Inform�tica', 'PCs, proyectores, pizarras', 25),
-('Aula', 'Sillas, mesas, pizarr�n', 40),
-('Sala de Reuniones', 'Mesa grande, pantalla, sillas', 10),
+('Aula Grande', 'Sillas, mesas, pizarr�n, proyector', 60),
+('Aula Chica', 'Mesa grande, pantalla, sillas', 10),
 ('Auditorio', 'Escenario, butacas, sonido', 200),
 ('Biblioteca', 'Mesas, estantes, PCs', 50),
-('Oficina', 'Escritorios, sillas, armarios', 5),
-('Taller', 'Herramientas, bancos de trabajo', 15),
+('Aula Mediana', 'Escritorios, sillas, armarios', 20),
+('Laboratorio de Informática', 'Herramientas, bancos de trabajo', 15),
 ('Comedor', 'Mesas, sillas, microondas', 30),
-('Dep�sito', 'Estantes, cajas, armarios', 8),
-('Sala de Estudio', 'Mesas, sillas, enchufes', 20);
+('Mesa de estudio', 'Estantes, cajas, armarios', 8),
+('Sala de Estudio Grupal', 'Mesas, sillas, enchufes', 20),
+('Sala de Estudio Silenciosa', 'Mesas, sillas, enchufes', 20);
 
 -- ESPACIOS
 INSERT INTO Espacios (IDsede, Estado, IDtipoEspacio, IDubicacion) VALUES
