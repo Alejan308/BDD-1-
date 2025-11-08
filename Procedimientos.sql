@@ -138,3 +138,35 @@ GO
 /*Procedimiento almacenado Ubicacion*/
 
 /*Procedimiento almacenado Sede*/
+--Procedimiento 1: sp_Insertar_Sede
+--Objetivo: Incertar una nueva sede en caso de expanción de la universidad
+CREATE PROCEDURE sp_Insertar_Sede
+    @Nombre VARCHAR(100),
+    @Direccion VARCHAR(200),
+    @Edificios INT
+AS
+BEGIN
+    INSERT INTO Sede(nombre,Direccion,edificios) 
+    VALUES (@Nombre, @Direccion, @Edificios);
+    PRINT 'Se agrego exitosamente una nueva sede.';
+    SELECT nombre, direccion, edificios
+        FROM Sede WHERE nombre = @Nombre AND direccion = @Direccion
+END;
+GO
+
+EXEC sp_Insertar_Sede 'San Juan', 'Av. Libertador Gral. San Martín 915', 3;
+GO
+
+--Procedimiento 2: sp_Eliminar_Sede
+--Objetivo: Permite eliminar una sede que ya no es de utilidad utilizando el nombre y la ubicación.
+CREATE PROCEDURE sp_Eliminar_Sede
+    @Nombre VARCHAR(100),
+    @Direccion VARCHAR(200)
+AS
+BEGIN
+    DELETE FROM Sede WHERE nombre = @Nombre AND direccion = @Direccion
+    PRINT 'Eliminación realizada correctamente'
+END;
+GO
+
+EXEC sp_Eliminar_Sede 'San Juan', 'Av. Libertador Gral. San Martín 915';
