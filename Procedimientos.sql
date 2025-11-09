@@ -129,6 +129,72 @@ CREATE PROCEDURE sp_Registro_Delete
 GO
 --------------------------------------------------------------------------------------------------------------------------------
 /*Procedimiento almacenado Espacio*/
+-- Procedimiento 1: Insertar nuevo espacio 
+
+CREATE PROCEDURE SP_InsertarEspacio
+    @IDsede INT,
+    @IDtipoEspacio INT,
+    @IDubicacion INT
+AS
+BEGIN
+    -- Verificar si las claves foráneas existen
+    IF NOT EXISTS (SELECT 1 FROM Sede WHERE IDsede = @IDsede)
+    BEGIN
+        PRINT 'Error: El ID de Sede especificado no existe.'
+        RETURN
+    END
+
+    IF NOT EXISTS (SELECT 1 FROM TipoEspacio WHERE IDtipoEspacio = @IDtipoEspacio)
+    BEGIN
+        PRINT 'Error: El ID de TipoEspacio especificado no existe.'
+        RETURN
+    END
+
+    IF NOT EXISTS (SELECT 1 FROM Ubicacion WHERE IDubicacion = @IDubicacion)
+    BEGIN
+        PRINT 'Error: El ID de Ubicacion especificado no existe.'
+        RETURN
+    END
+
+    -- Insertar el nuevo espacio
+    INSERT INTO Espacios (IDsede, IDtipoEspacio, IDubicacion)
+    VALUES (@IDsede, @IDtipoEspacio, @IDubicacion);
+    PRINT 'Ingreso del nuevo espacio realizado con éxito.'
+END
+GO
+
+-- Procedimiento 2: Consultar espacio por id
+CREATE PROCEDURE SP_ConsultarEspacio
+    @IDespacio INT
+AS
+BEGIN
+    -- Validar la existencia del espacio primero
+    IF NOT EXISTS (SELECT 1 FROM Espacios WHERE IDespacio = @IDespacio)
+    BEGIN
+        -- Mensaje de error
+        PRINT 'Error: El ID de Espacio especificado no fue encontrado.' 
+        RETURN -- Detiene el SP
+    END
+
+    SELECT 
+        E.IDespacio,
+        S.Nombre AS NombreSede,
+        TE.Nombre AS NombreTipoEspacio,
+        U.Edificio,
+        U.Piso
+    FROM 
+        Espacios E
+    INNER JOIN 
+        Sede S ON E.IDsede = S.IDsede
+    INNER JOIN 
+        TipoEspacio TE ON E.IDtipoEspacio = TE.IDtipoEspacio
+    INNER JOIN 
+        Ubicacion U ON E.IDubicacion = U.IDubicacion
+    WHERE 
+        E.IDespacio = @IDespacio;
+
+END
+GO
 
 /*Procedimiento almacenado TipoEspacio*/
 GO

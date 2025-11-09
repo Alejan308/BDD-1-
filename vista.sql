@@ -51,3 +51,25 @@ GO
     SELECT * FROM V_Popularidad_Espacios;
 GO
 
+
+-- Vista para ver estado de ocupación actual de todos los espacios
+CREATE VIEW VW_OcupacionActual AS
+SELECT
+    E.IDespacio,
+    TE.CantLugar AS CapacidadTotal,
+    COUNT(R.IDregistro) AS LugaresOcupados,
+    TE.CantLugar - COUNT(R.IDregistro) AS LugaresDisponibles,
+    -- Definimos el Estado basado en la capacidad
+    CASE
+        WHEN COUNT(R.IDregistro) = 0 THEN 'Vacío'
+        WHEN COUNT(R.IDregistro) = TE.CantLugar THEN 'Lleno'
+        ELSE 'Parcialmente Ocupado'
+    END AS EstadoOcupacion
+FROM
+    Espacios E
+JOIN
+    TipoEspacio TE ON E.IDtipoEspacio = TE.IDtipoEspacio
+LEFT JOIN
+    Registro R ON E.IDespacio = R.IDespacio AND R.HoraSalida IS NULL -- Solo registros ACTIVOS
+GROUP BY
+    E.IDespacio, TE.CantLugar;
