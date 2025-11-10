@@ -11,7 +11,7 @@ CREATE TABLE Usuario (
     Nombre VARCHAR(50) NOT NULL,
     Apellido VARCHAR(50) NOT NULL,
     Mail VARCHAR(100) UNIQUE NOT NULL,
-    Privilegio VARCHAR(20) NOT NULL,
+    Privilegio VARCHAR(20) NOT NULL CHECK (Privilegio IN ('Admin', 'Estudiante', 'Docente')),
 
 );
 
@@ -19,7 +19,7 @@ CREATE TABLE Sede (
     IDsede INT IDENTITY(1,1) PRIMARY KEY,
     Nombre VARCHAR(100) NOT NULL,
     Direccion VARCHAR(200),
-    Edificios INT
+    Edificios INT CHECK (Edificios > 0),
 );
 
 CREATE TABLE Ubicacion (
@@ -32,7 +32,7 @@ CREATE TABLE TipoEspacio (
     IDtipoEspacio INT IDENTITY(1,1) PRIMARY KEY,
     Nombre VARCHAR(100) NOT NULL,
     Elementos VARCHAR(400),
-    CantLugar INT,
+    CantLugar CHECK (CantLugar > 0),
 );
 
 CREATE TABLE Espacios (
