@@ -119,6 +119,12 @@ ORDER BY
     R.HoraEntrada DESC;
 GO
 
+--------------------------------------------------------------------------------------------
+
+-- 7. Cual es el tipo de espacio, el estado y el piso en el que se encuentra que tienen proyector y se encuentran en edificios Lima
+SELECT te.Nombre, e.Estado, u.Piso
+FROM TipoEspacio te inner join Espacios e on te.IDtipoEspacio=e.IDtipoEspacio inner join Ubicacion u on u.IDubicacion= e.IDubicacion
+where te.Elementos LIKE '%proyectores%' and u.Edificio LIKE '%Lima%'
 
 
 
