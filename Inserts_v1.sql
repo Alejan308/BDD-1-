@@ -61,14 +61,14 @@ INSERT INTO TipoEspacio (Nombre, Elementos, CantLugar) VALUES
 -- ESPACIOS
 INSERT INTO Espacios (IDsede, Estado, IDtipoEspacio, IDubicacion) VALUES
 (1, 'Disponible', 1, 1),
-(2, 'Ocupado', 2, 2),
+(2, 'Disponible', 2, 2),
 (3, 'Disponible', 3, 3),
-(4, 'Ocupado', 4, 4),
+(4, 'Disponible', 4, 4),
 (5, 'Disponible', 5, 5),
 (6, 'Disponible', 6, 6),
-(7, 'Ocupado', 7, 7),
+(7, 'Disponible', 7, 7),
 (8, 'Disponible', 8, 8),
-(9, 'Ocupado', 9, 9),
+(9, 'Disponible', 9, 9),
 (10, 'Disponible', 10, 10);
 
 -- REGISTRO
