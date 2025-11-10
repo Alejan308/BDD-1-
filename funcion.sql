@@ -43,3 +43,33 @@ WHERE
     IDusuario = 3; 
 GO
 ------------------------------------------------------------------------------------------------------------------------
+
+
+-- Lista los espacios disponibles de una sede, incluyendo tipo y ubicación
+CREATE OR ALTER FUNCTION dbo.fn_EspaciosDisponiblesPorSede
+(
+    @IDsede INT                         
+)
+RETURNS TABLE
+AS
+RETURN
+(
+    SELECT 
+        e.IDespacio,                      
+        e.IDsede,                        
+        t.Nombre    AS TipoEspacio,    
+        u.Edificio,                    
+        u.Piso                          
+    FROM dbo.Espacios e
+    JOIN dbo.TipoEspacio t ON t.IDtipoEspacio = e.IDtipoEspacio
+    JOIN dbo.Ubicacion  u ON u.IDubicacion   = e.IDubicacion
+    WHERE e.IDsede = @IDsede
+      AND e.Estado = 'Disponible'        
+);
+GO
+
+-- Para probarlo
+
+SELECT * FROM dbo.fn_EspaciosDisponiblesPorSede(1);
+
+
