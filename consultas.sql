@@ -175,7 +175,29 @@ ORDER BY
 
 -----------------------------------------------------------------------------------------
 
---9. 
+--9. Identifica todos los registros de uso que excedieron una duración de 5 horas. Esto es útil para detectar posibles olvidos al cerrar la sesión o usos anómalamente largos que podrían requerir revisión.
 
 
+SELECT
+    R.IDregistro,
+    U.Nombre + ' ' + U.Apellido AS Usuario,
+    E.IDespacio,
+    R.HoraEntrada,
+    R.HoraSalida,
+    -- Calcula la duración en horas
+    DATEDIFF(HOUR, R.HoraEntrada, R.HoraSalida) AS DuracionHoras
+FROM
+    Registro R
+JOIN
+    Usuario U ON R.IDusuario = U.LU
+JOIN
+    Espacios E ON R.IDespacio = E.IDespacio
+WHERE
+    R.HoraSalida IS NOT NULL -- Solo usos finalizados
+    AND DATEDIFF(HOUR, R.HoraEntrada, R.HoraSalida) > 5 -- Usos de más de 5 horas
+ORDER BY
+    DuracionHoras DESC;
 
+----------------------------------------------------------------------------------------
+
+--10. 
