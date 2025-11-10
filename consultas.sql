@@ -91,4 +91,37 @@ GROUP BY
     S.Nombre 
 ORDER BY
     PromedioMinutosOcupacion DESC,
+
     S.IDsede;
+
+--------------------------------------------------------------------------------------------
+-- 6. Ocupación actual: quién está usando qué, ahora mismo
+
+SELECT
+    E.IDespacio,
+    S.Nombre      AS Sede,
+    T.Nombre      AS TipoEspacio,
+    U.Nombre + ' ' + U.Apellido AS Usuario,
+    R.HoraEntrada AS Desde
+FROM 
+    Registro R
+JOIN 
+    Espacios E      ON E.IDespacio = R.IDespacio
+JOIN 
+    Usuario U       ON U.LU = R.IDusuario
+JOIN 
+    Sede S          ON S.IDsede = E.IDsede
+JOIN 
+    TipoEspacio T   ON T.IDtipoEspacio = E.IDtipoEspacio
+WHERE 
+    R.HoraSalida IS NULL
+ORDER BY 
+    R.HoraEntrada DESC;
+GO
+
+
+
+
+
+
+
