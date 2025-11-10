@@ -31,6 +31,7 @@ GO
     Apellido VARCHAR(50),
     Mail VARCHAR(100),
     Estado_Usuario VARCHAR(10),
+    Fecha DATETIME DEFAULT GETDATE()
 );
 GO
 
