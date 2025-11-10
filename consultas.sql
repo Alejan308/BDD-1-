@@ -17,7 +17,7 @@ GO
 
 
 --------------------------------------------------------------------------------------------
--- 2. Número Total de Espacios por Tipo
+/*-- 2. Número Total de Espacios por Tipo NO VA
 
 SELECT
     TE.Nombre AS TipoEspacio,
@@ -29,7 +29,7 @@ JOIN
 GROUP BY
     TE.Nombre
 ORDER BY
-    TotalEspacios DESC;
+  TotalEspacios DESC;*/
 
 --------------------------------------------------------------------------------------------
 -- 3. Usuarios que Han Registrado Entrada Hoy
@@ -127,7 +127,52 @@ FROM TipoEspacio te inner join Espacios e on te.IDtipoEspacio=e.IDtipoEspacio in
 where te.Elementos LIKE '%proyectores%' and u.Edificio LIKE '%Lima%'
 
 
+--------------------------------------------------------------------------------------------
 
+-- 8. Esta consulta nos permite encontrar un espacio grande y libre para una reunion de ultima hora en una sede especifica
 
+SELECT
+    S.Nombre AS Sede,
+    E.IDespacio,
+    TE.Nombre AS TipoEspacio,
+    TE.CantLugar AS Capacidad,
+    E.Estado
+FROM
+    Espacios E
+JOIN
+    Sede S ON E.IDsede = S.IDsede
+JOIN
+    TipoEspacio TE ON E.IDtipoEspacio = TE.IDtipoEspacio
+WHERE
+    S.Nombre = 'Monserrat' --  FILTRO 1: Selecciona una sede específica
+    AND E.Estado = 'Disponible' --  FILTRO 2: Solo espacios que están libres AHORA
+    AND TE.CantLugar >= 50 -- FILTRO 3: Solo espacios de alta capacidad
+ORDER BY
+    TE.CantLugar DESC;
+
+----------------------------------------------------------------------------------------
+
+--9. Duracion promedio de uso por tipo de espacio (ide cuánto tiempo, en promedio, la gente usa cada tipo de espacio)
+
+SELECT
+    TE.Nombre AS TipoEspacio,
+    -- Calcula el promedio SOLO para los usos finalizados
+    CAST(AVG(DATEDIFF(MINUTE, R.HoraEntrada, R.HoraSalida)) AS DECIMAL(10, 2)) AS PromedioMinutos
+FROM
+    Registro R
+JOIN
+    Espacios E ON R.IDespacio = E.IDespacio
+JOIN
+    TipoEspacio TE ON E.IDtipoEspacio = TE.IDtipoEspacio
+WHERE
+    R.HoraSalida IS NOT NULL -- Excluye los usos que aún están activos
+GROUP BY
+    TE.Nombre
+ORDER BY
+    PromedioMinutos DESC;
+
+-----------------------------------------------------------------------------------------
+
+--10. 
 
 
