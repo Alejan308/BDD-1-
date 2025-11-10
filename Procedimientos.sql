@@ -269,6 +269,42 @@ END;
 GO
 
 /*Procedimiento almacenado Ubicacion*/
+--Procedimiento 1: sp_Eliminar_Ubicacion
+--Objetivo: Eliminar una ubicación por su ID
+CREATE OR ALTER PROCEDURE dbo.sp_Eliminar_Ubicacion
+    @IDubicacion INT
+AS
+BEGIN
+    DELETE FROM dbo.Ubicacion
+    WHERE IDubicacion = @IDubicacion;
+
+    PRINT 'Ubicación eliminada correctamente.';
+END;
+GO
+
+
+EXEC dbo.sp_Eliminar_Ubicacion @IDubicacion = 3;
+GO
+
+--Procedimiento 2: sp_Insertar_Ubicacion
+--Objetivo: Insertar una nueva ubicación (Edificio, Piso)
+CREATE OR ALTER PROCEDURE dbo.sp_Insertar_Ubicacion
+    @Edificio VARCHAR(100),
+    @Piso     VARCHAR(10)
+AS
+BEGIN
+    -- Inserta y devuelve la fila creada 
+    INSERT INTO dbo.Ubicacion (Edificio, Piso)
+    OUTPUT inserted.IDubicacion, inserted.Edificio, inserted.Piso
+    VALUES (@Edificio, @Piso);
+
+    PRINT 'Se agregó exitosamente una nueva ubicación.';
+END;
+GO
+
+
+EXEC dbo.sp_Insertar_Ubicacion 'Lima 4', '1';
+GO
 
 /*Procedimiento almacenado Sede*/
 --Procedimiento 1: sp_Insertar_Sede
