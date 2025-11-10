@@ -200,4 +200,21 @@ ORDER BY
 
 ----------------------------------------------------------------------------------------
 
---10. 
+--10. Esta consulta es crucial para quienes buscan un espacio con una característica específica. Permite listar todos los elementos (recursos) que tienen los espacios que están actualmente disponibles.
+
+SELECT DISTINCT -- Muestra cada elemento UNA SOLA VEZ
+    TE.Elementos,
+    TE.Nombre AS TipoEspacio,
+    S.Nombre AS Sede
+FROM
+    Espacios E
+JOIN
+    TipoEspacio TE ON E.IDtipoEspacio = TE.IDtipoEspacio
+JOIN
+    Sede S ON E.IDsede = S.IDsede
+WHERE
+    E.Estado = 'Disponible' -- Solo espacios que están libres
+    AND TE.Elementos IS NOT NULL -- Excluye tipos de espacio sin elementos listados
+ORDER BY
+    S.Nombre, TE.Nombre;
+
