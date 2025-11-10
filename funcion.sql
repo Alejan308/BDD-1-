@@ -1,6 +1,7 @@
 USE FreeSpaces;
 GO
 
+-- Funcion que calcula la duracion de una estadia
 CREATE FUNCTION fn_CalcularDuracionEstadia (
     @HoraEntrada DATETIME,
     @HoraSalida DATETIME
@@ -28,7 +29,6 @@ BEGIN
 END;
 GO
 
--- Para probarlo
 
 SELECT 
     r.IDregistro,
@@ -73,3 +73,41 @@ GO
 SELECT * FROM dbo.fn_EspaciosDisponiblesPorSede(1);
 
 
+
+-- Función que calcula si un espacio esta 'Ocupado' o 'Disponible'
+CREATE FUNCTION dbo.fn_CalcularEstadoEspacio (@IDespacio INT)
+RETURNS VARCHAR(20)
+AS
+BEGIN
+    DECLARE @LugaresOcupados INT;
+    DECLARE @CapacidadTotal INT;
+    DECLARE @NuevoEstado VARCHAR(20);
+
+    -- 1. Contar cuántos "lugares" están ocupados actualmente (registros activos)
+    SELECT 
+        @LugaresOcupados = COUNT(*)
+    FROM 
+        Registro R
+    WHERE 
+        R.IDespacio = @IDespacio
+        AND R.HoraSalida IS NULL; -- Solo registros con hora de entrada, pero sin hora de salida
+
+    -- 2. Obtener la capacidad total del espacio
+    SELECT 
+        @CapacidadTotal = TE.CantLugar
+    FROM 
+        Espacios E
+    JOIN 
+        TipoEspacio TE ON E.IDtipoEspacio = TE.IDtipoEspacio
+    WHERE 
+        E.IDespacio = @IDespacio;
+
+    -- 3. Determinar el nuevo estado
+    IF @LugaresOcupados >= ISNULL(@CapacidadTotal, 1) -- Si la capacidad es NULL o 0, asumimos 1 para evitar división por cero.
+        SET @NuevoEstado = 'Ocupado';
+    ELSE
+        SET @NuevoEstado = 'Disponible';
+
+    RETURN @NuevoEstado;
+END;
+GO

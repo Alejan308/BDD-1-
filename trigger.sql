@@ -57,3 +57,32 @@ BEGIN
 
 END;
 GO
+
+
+
+-- Trigger que se dispara después de Insertar o Actualizar en la tabla Registro para actualizar estado del espacio
+CREATE TRIGGER trg_Registro_ActualizarEstadoEspacio
+ON Registro
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    -- Declarar una tabla temporal para almacenar los IDespacio únicos afectados
+    -- (La tabla 'inserted' o 'deleted' puede tener múltiples filas)
+    DECLARE @EspaciosAfectados TABLE (IDespacio INT PRIMARY KEY);
+
+    -- 1. Insertar en la tabla temporal los IDespacio afectados por la INSERCIÓN o ACTUALIZACIÓN
+    INSERT INTO @EspaciosAfectados (IDespacio)
+    SELECT IDespacio FROM inserted
+    UNION
+    SELECT IDespacio FROM deleted; -- En caso de UPDATE, también incluimos el ID viejo si cambió
+
+    -- 2. Actualizar la tabla Espacios basándose en la lista de IDs afectados
+    UPDATE E
+    SET E.Estado = dbo.fn_CalcularEstadoEspacio(E.IDespacio)
+    FROM 
+        Espacios E
+    JOIN 
+        @EspaciosAfectados AF ON E.IDespacio = AF.IDespacio;
+
+END
+GO

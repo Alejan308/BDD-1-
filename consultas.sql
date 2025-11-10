@@ -130,7 +130,6 @@ where te.Elementos LIKE '%proyectores%' and u.Edificio LIKE '%Lima%'
 
 
 --------------------------------------------------------------------------------------------
-
 -- 7. Esta consulta nos permite encontrar un espacio grande y libre para una reunion de ultima hora en una sede especifica
 
 SELECT
@@ -176,7 +175,6 @@ ORDER BY
 -----------------------------------------------------------------------------------------
 
 --9. Identifica todos los registros de uso que excedieron una duración de 5 horas. Esto es útil para detectar posibles olvidos al cerrar la sesión o usos anómalamente largos que podrían requerir revisión.
-
 
 SELECT
     R.IDregistro,

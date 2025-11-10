@@ -50,11 +50,21 @@ CREATE TABLE Registro (
     IDregistro INT IDENTITY(1,1) PRIMARY KEY, 
     IDespacio INT,
     IDusuario INT,
-    HoraEntrada DATETIME,
+    HoraEntrada DATETIME NOT NULL,
     HoraSalida DATETIME,
     CONSTRAINT Registro_Espacio FOREIGN KEY (IDespacio) REFERENCES Espacios(IDespacio),
     CONSTRAINT Registro_Usuario FOREIGN KEY (IDusuario) REFERENCES Usuario(LU)
 );
+
+
+
+
+
+
+
+
+
+
 
 
 
