@@ -31,6 +31,7 @@ GO
 --------------------------------------------------------------------------------------------------------------------------------
 /*Procedimiento almacenado Registo*/
 
+
 CREATE PROCEDURE sp_Registro_IniciarOcupacion
         @IDusuario INT,
         @IDespacio INT
@@ -45,21 +46,40 @@ CREATE PROCEDURE sp_Registro_IniciarOcupacion
         WHERE IDespacio = @IDespacio;
 
         -- Se ve si esta disponible
-        IF @EstadoActual = 'Disponible'
-        BEGIN
+        IF @EstadoActual <> 'Disponible' -- Si es distinto de disponible
+            BEGIN
+                RAISERROR('Error: El espacio ya se encuentra ocupado o no existe.', 16, 1);
+                RETURN; -- para la ejecución
+            END
+        BEGIN TRY
+        BEGIN TRANSACTION;
             UPDATE Espacios
             SET Estado = 'Ocupado'
             WHERE IDespacio = @IDespacio;
             
             INSERT INTO Registro (IDespacio, IDusuario, HoraEntrada, HoraSalida)
             VALUES (@IDespacio, @IDusuario, GETDATE(), NULL);
+
+            COMMIT TRANSACTION; -- Esto para que se confirmen ambas acciones "Update" y "Insert"
             
             PRINT 'Ocupación registrada con éxito.';
-        END
-        ELSE
-        BEGIN
-            PRINT 'Error: El espacio ya se encuentra ocupado.';
-        END
+        END TRY
+        BEGIN CATCH
+            IF @@TRANCOUNT > 0
+                ROLLBACK TRANSACTION; -- Rollback por si algo sale mal entre las dos operaciones
+                
+
+                DECLARE @ErrorMessage NVARCHAR(4000);
+            DECLARE @ErrorSeverity INT;
+            DECLARE @ErrorState INT;
+
+            SELECT 
+                @ErrorMessage = ERROR_MESSAGE(),
+                @ErrorSeverity = ERROR_SEVERITY(),
+                @ErrorState = ERROR_STATE();
+
+            RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
+        END CATCH
     END;
 GO
 
@@ -73,22 +93,41 @@ CREATE PROCEDURE sp_Registro_FinalizarOcupacion
         FROM Espacios 
         WHERE IDespacio = @IDespacio;
 
-        IF @EstadoActual = 'Ocupado'
+        IF @EstadoActual <> 'Ocupado' OR @EstadoActual IS NULL
         BEGIN
-            UPDATE Espacios
-            SET Estado = 'Disponible'
-            WHERE IDespacio = @IDespacio;
+            RAISERROR('Error: El espacio ya se encontraba disponible o no existe.', 16, 1);
+            RETURN; 
+        END
 
-            UPDATE Registro
-            SET HoraSalida = GETDATE()
-            WHERE IDespacio = @IDespacio AND HoraSalida IS NULL;
-            
-            PRINT 'Espacio liberado.';
-        END
-        ELSE
-        BEGIN
-            PRINT 'Error: El espacio ya se encontraba disponible.';
-        END
+        BEGIN TRY
+            BEGIN TRANSACTION
+                
+                UPDATE Espacios
+                SET Estado = 'Disponible'
+                WHERE IDespacio = @IDespacio;
+
+                UPDATE Registro
+                SET HoraSalida = GETDATE()
+                WHERE IDespacio = @IDespacio AND HoraSalida IS NULL;
+                
+                PRINT 'Espacio liberado.';
+        END TRY
+
+        BEGIN CATCH
+            IF @@TRANCOUNT > 0
+                ROLLBACK TRANSACTION; -- Si está abierta, deshacemos todo
+
+            DECLARE @ErrorMessage NVARCHAR(4000);
+            DECLARE @ErrorSeverity INT;
+            DECLARE @ErrorState INT;
+
+            SELECT 
+                @ErrorMessage = ERROR_MESSAGE(),
+                @ErrorSeverity = ERROR_SEVERITY(),
+                @ErrorState = ERROR_STATE();
+
+            RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
+        END CATCH
     END;
 GO
 
