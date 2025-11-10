@@ -2,7 +2,7 @@ USE FreeSpaces;
 GO
 
 -- Funcion que calcula la duracion de una estadia
-CREATE FUNCTION fn_CalcularDuracionEstadia (
+CREATE OR ALTER FUNCTION dbo.fn_CalcularDuracionEstadia (
     @HoraEntrada DATETIME,
     @HoraSalida DATETIME
 )
@@ -42,6 +42,8 @@ FROM
 WHERE
     IDusuario = 3; 
 GO
+
+SELECT * FROM dbo.fn_CalcularDuracionEstadia('2025-11-11 20:00:00',NULL);
 ------------------------------------------------------------------------------------------------------------------------
 
 
@@ -75,7 +77,7 @@ SELECT * FROM dbo.fn_EspaciosDisponiblesPorSede(1);
 
 
 -- Función que calcula si un espacio esta 'Ocupado' o 'Disponible'
-CREATE FUNCTION dbo.fn_CalcularEstadoEspacio (@IDespacio INT)
+CREATE OR ALTER FUNCTION dbo.fn_CalcularEstadoEspacio (@IDespacio INT)
 RETURNS VARCHAR(20)
 AS
 BEGIN
@@ -111,3 +113,5 @@ BEGIN
     RETURN @NuevoEstado;
 END;
 GO
+
+SELECT * FROM dbo.fn_CalcularEstadoEspacio(1);

@@ -1,7 +1,7 @@
---1. Muestra cuantos espacios hay de cada tipo  (por ejemplo, cuántas aulas, cuántas salas, etc.), ordenados de mayor a menor cantidad.
-
 USE FreeSpaces;
 GO
+
+--1. Muestra cuantos espacios hay de cada tipo  (por ejemplo, cuántas aulas, cuántas salas, etc.), ordenados de mayor a menor cantidad.
 
 SELECT --Le decimos al servidor qué columnas queremos mostrar.
 t.IDtipoEspacio,
@@ -14,24 +14,6 @@ GROUP BY t.IDtipoEspacio, t.Nombre
 ORDER BY CantidadDeEspacios DESC;
 
 GO
-
-
-
-
---------------------------------------------------------------------------------------------
-/*-- 2. Número Total de Espacios por Tipo NO VA
-
-SELECT
-    TE.Nombre AS TipoEspacio,
-    COUNT(E.IDespacio) AS TotalEspacios
-FROM
-    Espacios E
-JOIN
-    TipoEspacio TE ON E.IDtipoEspacio = TE.IDtipoEspacio
-GROUP BY
-    TE.Nombre
-ORDER BY
-  TotalEspacios DESC;*/
 
 --------------------------------------------------------------------------------------------
 -- 2. Usuarios que Han Registrado Entrada Hoy
