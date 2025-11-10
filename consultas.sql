@@ -1,3 +1,5 @@
+--1. Muestra cuantos espacios hay de cada tipo  (por ejemplo, cuántas aulas, cuántas salas, etc.), ordenados de mayor a menor cantidad.
+
 USE FreeSpaces;
 GO
 
@@ -32,7 +34,7 @@ ORDER BY
   TotalEspacios DESC;*/
 
 --------------------------------------------------------------------------------------------
--- 3. Usuarios que Han Registrado Entrada Hoy
+-- 2. Usuarios que Han Registrado Entrada Hoy
 
 SELECT
     U.Nombre,
@@ -53,7 +55,7 @@ WHERE
 GO
 
 --------------------------------------------------------------------------------------------
--- 4. Detalle de Registros de Usuario por LU de usuario
+-- 3. Detalle de Registros de Usuario por LU de usuario
 
 SELECT
     R.HoraEntrada,
@@ -71,7 +73,7 @@ WHERE
 GO
 
 --------------------------------------------------------------------------------------------
--- 5. Promedio de Tiempo de Ocupación por Sede
+-- 4. Promedio de Tiempo de Ocupación por Sede
 
 SELECT
     S.IDsede,
@@ -95,7 +97,7 @@ ORDER BY
     S.IDsede;
 
 --------------------------------------------------------------------------------------------
--- 6. Ocupación actual: quién está usando qué, ahora mismo
+-- 5. Ocupación actual: quién está usando qué, ahora mismo
 
 SELECT
     E.IDespacio,
@@ -121,7 +123,7 @@ GO
 
 --------------------------------------------------------------------------------------------
 
--- 7. Cual es el tipo de espacio, el estado y el piso en el que se encuentra que tienen proyector y se encuentran en edificios Lima
+-- 6. Cual es el tipo de espacio, el estado y el piso en el que se encuentra que tienen proyector y se encuentran en edificios Lima
 SELECT te.Nombre, e.Estado, u.Piso
 FROM TipoEspacio te inner join Espacios e on te.IDtipoEspacio=e.IDtipoEspacio inner join Ubicacion u on u.IDubicacion= e.IDubicacion
 where te.Elementos LIKE '%proyectores%' and u.Edificio LIKE '%Lima%'
@@ -129,7 +131,7 @@ where te.Elementos LIKE '%proyectores%' and u.Edificio LIKE '%Lima%'
 
 --------------------------------------------------------------------------------------------
 
--- 8. Esta consulta nos permite encontrar un espacio grande y libre para una reunion de ultima hora en una sede especifica
+-- 7. Esta consulta nos permite encontrar un espacio grande y libre para una reunion de ultima hora en una sede especifica
 
 SELECT
     S.Nombre AS Sede,
@@ -152,7 +154,7 @@ ORDER BY
 
 ----------------------------------------------------------------------------------------
 
---9. Duracion promedio de uso por tipo de espacio (ide cuánto tiempo, en promedio, la gente usa cada tipo de espacio)
+--8. Duracion promedio de uso por tipo de espacio (ide cuánto tiempo, en promedio, la gente usa cada tipo de espacio)
 
 SELECT
     TE.Nombre AS TipoEspacio,
@@ -173,6 +175,7 @@ ORDER BY
 
 -----------------------------------------------------------------------------------------
 
---10. 
+--9. 
+
 
 
