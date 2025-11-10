@@ -198,7 +198,7 @@ ORDER BY
 
 ----------------------------------------------------------------------------------------
 
---10. Esta consulta es crucial para quienes buscan un espacio con una característica específica. Permite listar todos los elementos (recursos) que tienen los espacios que están actualmente disponibles.
+--10. Esta consulta es  para quienes buscan un espacio con una característica específica. Permite listar todos los elementos (recursos) que tienen los espacios que están actualmente disponibles.
 
 SELECT DISTINCT -- Muestra cada elemento UNA SOLA VEZ
     TE.Elementos,
@@ -215,4 +215,5 @@ WHERE
     AND TE.Elementos IS NOT NULL -- Excluye tipos de espacio sin elementos listados
 ORDER BY
     S.Nombre, TE.Nombre;
+
 
