@@ -1,19 +1,18 @@
 --# INSERTES
 
-select * from Usuario;
 
 -- USUARIOS
 INSERT INTO Usuario (Nombre, Apellido, Mail, Privilegio) VALUES
-('Ana', 'Gomez', 'ana.gomez@uade.edu.ar', 'Admin'),
-('Luis', 'Perez', 'luis.perez@uade.edu.ar', 'Usuario'),
-('Maria', 'Lopez', 'maria.lopez@uade.edu.ar', 'Usuario'),
-('Juan', 'Torres', 'juan.torres@uade.edu.ar', 'Admin'),
-('Sofia', 'Mendez', 'sofia.mendez@uade.edu.ar', 'Usuario'),
-('Carlos', 'Rivas', 'carlos.rivas@uade.edu.ar', 'Usuario'),
-('Lucia', 'Navarro', 'lucia.navarro@uade.edu.ar', 'Usuario'),
-('Miguel', 'Ruiz', 'miguel.ruiz@uade.edu.ar', 'Usuario'),
-('Elena', 'Fernandez', 'elena.fernandez@uade.edu.ar', 'Admin'),
-('Jorge', 'Santos', 'jorge.santos@uade.edu.ar', 'Usuario');
+('Ana', 'Gomez', 'ana.gomez@uade.edu.ar', 'Docente'),
+('Luis', 'Perez', 'luis.perez@uade.edu.ar', 'Admin'),
+('Mar�a', 'Lopez', 'maria.lopez@uade.edu.ar', 'Estudiante'),
+('Juan', 'Torres', 'juan.torres@uade.edu.ar', 'Docente'),
+('Sof�a', 'Mendez', 'sofia.mendez@uade.edu.ar', 'Estudiante'),
+('Carlos', 'Rivas', 'carlos.rivas@uade.edu.ar', 'Estudiante'),
+('Luc�a', 'Navarro', 'lucia.navarro@uade.edu.ar', 'Estudiante'),
+('Miguel', 'Ruiz', 'miguel.ruiz@uade.edu.ar', 'Estudiante'),
+('Elena', 'Fernandez', 'elena.fernandez@uade.edu.ar', 'Docente'),
+('Jorge', 'Santos', 'jorge.santos@uade.edu.ar', 'Estudiante');
 
 -- SEDES 
 INSERT INTO Sede (Nombre, Direccion, Edificios) VALUES
@@ -27,6 +26,7 @@ INSERT INTO Sede (Nombre, Direccion, Edificios) VALUES
 ('Monserrat', 'Independencia 450', 2),
 ('Pinamar', 'De las Artes 900', 1),
 ('Recoleta', 'Av. Pueyrred�n 120', 2);
+
 
 -- UBICACIONES 
 INSERT INTO Ubicacion (Edificio, Piso) VALUES
@@ -73,11 +73,12 @@ INSERT INTO Espacios (IDsede, Estado, IDtipoEspacio, IDubicacion) VALUES
 
 -- REGISTRO
 INSERT INTO Registro (IDespacio, IDusuario, HoraEntrada, HoraSalida) VALUES
-(1, 1, '2025-11-03 08:00:00', '2025-11-03 10:00:00'),
+(3,5,'2025-11-11 17:00:00',NULL),
+(1, 1, '2025-11-10 08:00:00', '2025-11-10 10:00:00'),
 (2, 2, '2025-11-03 09:15:00', '2025-11-03 11:15:00'),
 (3, 3, '2025-11-03 10:00:00', '2025-11-03 12:30:00'),
 (4, 4, '2025-11-03 11:00:00', '2025-11-03 13:00:00'),
-(5, 5, '2025-11-03 12:00:00', '2025-11-03 13:30:00'),
+(5, 5, '2025-11-10 12:00:00', '2025-11-10 13:30:00'),
 (6, 6, '2025-11-03 13:00:00', '2025-11-03 14:45:00'),
 (7, 7, '2025-11-03 14:00:00', '2025-11-03 15:15:00'),
 (8, 8, '2025-11-03 15:00:00', '2025-11-03 16:00:00'),
